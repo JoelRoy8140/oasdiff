@@ -48,6 +48,11 @@ func RequestPropertyTypeChangedCheck(diffReport *diff.Diff, operationsSources *d
 						continue
 					}
 
+					// Check for suppression by OneOfWrapping checker
+					if shouldSuppressTypeChangedForOneOfWrapping(schemaDiff) {
+						continue
+					}
+
 					if breakingTypeFormatChangedInRequestProperty(typeDiff, formatDiff, mediaType, schemaDiff) {
 						id = RequestBodyTypeChangedId
 					}
@@ -76,6 +81,11 @@ func RequestPropertyTypeChangedCheck(diffReport *diff.Diff, operationsSources *d
 
 						// Check for suppression by ListOfTypes checker
 						if shouldSuppressPropertyTypeChangedForListOfTypes(propertyDiff) {
+							return
+						}
+
+						// Check for suppression by OneOfWrapping checker
+						if shouldSuppressPropertyTypeChangedForOneOfWrapping(propertyDiff) {
 							return
 						}
 

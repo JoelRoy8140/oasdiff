@@ -44,6 +44,11 @@ func ResponsePropertyOneOfUpdated(diffReport *diff.Diff, operationsSources *diff
 						continue
 					}
 
+					// Check for suppression by OneOfWrapping checker
+					if shouldSuppressOneOfSchemaChangedForOneOfWrapping(mediaTypeDiff.SchemaDiff) {
+						continue
+					}
+
 					baseSource, revisionSource := SchemaFieldSources(operationsSources, operationItem, mediaTypeDiff.SchemaDiff, "oneOf")
 
 					if mediaTypeDiff.SchemaDiff.OneOfDiff != nil && len(mediaTypeDiff.SchemaDiff.OneOfDiff.Added) > 0 {
@@ -81,6 +86,11 @@ func ResponsePropertyOneOfUpdated(diffReport *diff.Diff, operationsSources *diff
 
 							// Check for suppression by ListOfTypes checker
 							if shouldSuppressPropertyOneOfSchemaChangedForListOfTypes(propertyDiff) {
+								return
+							}
+
+							// Check for suppression by OneOfWrapping checker
+							if shouldSuppressPropertyOneOfSchemaChangedForOneOfWrapping(propertyDiff) {
 								return
 							}
 

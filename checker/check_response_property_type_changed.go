@@ -38,6 +38,11 @@ func ResponsePropertyTypeChangedCheck(diffReport *diff.Diff, operationsSources *
 							continue
 						}
 
+						// Check for suppression by OneOfWrapping checker
+						if shouldSuppressTypeChangedForOneOfWrapping(mediaTypeDiff.SchemaDiff) {
+							continue
+						}
+
 						schemaDiff := mediaTypeDiff.SchemaDiff
 						baseSource, revisionSource := SchemaFieldSources(operationsSources, operationItem, schemaDiff, "type")
 						typeDiff := schemaDiff.TypeDiff
@@ -66,6 +71,11 @@ func ResponsePropertyTypeChangedCheck(diffReport *diff.Diff, operationsSources *
 
 							// Check for suppression by ListOfTypes checker
 							if shouldSuppressPropertyTypeChangedForListOfTypes(propertyDiff) {
+								return
+							}
+
+							// Check for suppression by OneOfWrapping checker
+							if shouldSuppressPropertyTypeChangedForOneOfWrapping(propertyDiff) {
 								return
 							}
 

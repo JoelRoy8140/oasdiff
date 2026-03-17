@@ -41,7 +41,12 @@ func RequestPropertyOneOfUpdatedCheck(diffReport *diff.Diff, operationsSources *
 					continue
 				}
 
-				if mediaTypeDiff.SchemaDiff.OneOfDiff != nil && len(mediaTypeDiff.SchemaDiff.OneOfDiff.Added) > 0 {
+				// Check for suppression by OneOfWrapping checker
+				if shouldSuppressOneOfSchemaChangedForOneOfWrapping(mediaTypeDiff.SchemaDiff) {
+					continue
+				}
+
+				if mediaTypeDiff.SchemaDiff.OneOfDiff != nil&& len(mediaTypeDiff.SchemaDiff.OneOfDiff.Added) > 0 {
 					baseSource, revisionSource := SchemaFieldSources(operationsSources, operationItem, mediaTypeDiff.SchemaDiff, "oneOf")
 					result = append(result, NewApiChange(
 						RequestBodyOneOfAddedId,
@@ -81,7 +86,12 @@ func RequestPropertyOneOfUpdatedCheck(diffReport *diff.Diff, operationsSources *
 							return
 						}
 
-						propName := propertyFullName(propertyPath, propertyName)
+						// Check for suppression by OneOfWrapping checker
+						if shouldSuppressPropertyOneOfSchemaChangedForOneOfWrapping(propertyDiff) {
+							return
+						}
+
+						propName:= propertyFullName(propertyPath, propertyName)
 						propBaseSource, propRevisionSource := SchemaFieldSources(operationsSources, operationItem, propertyDiff, "oneOf")
 
 						if len(propertyDiff.OneOfDiff.Added) > 0 {

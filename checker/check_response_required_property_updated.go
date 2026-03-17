@@ -1,9 +1,10 @@
 package checker
 
 import (
+	"slices"
+
 	"github.com/getkin/kin-openapi/openapi3"
 	"github.com/oasdiff/oasdiff/diff"
-	"slices"
 )
 
 const (
@@ -36,6 +37,10 @@ func ResponseRequiredPropertyUpdatedCheck(diffReport *diff.Diff, operationsSourc
 
 				modifiedMediaTypes := responseDiff.ContentDiff.MediaTypeModified
 				for mediaType, mediaTypeDiff := range modifiedMediaTypes {
+					// Check for suppression by OneOfWrapping checker
+					if shouldSuppressPropertyRemovedForOneOfWrapping(mediaTypeDiff.SchemaDiff) {
+						continue
+					}
 					mediaTypeDetails := formatMediaTypeDetails(mediaType, len(modifiedMediaTypes))
 					CheckDeletedPropertiesDiff(
 						mediaTypeDiff.SchemaDiff,

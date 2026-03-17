@@ -468,6 +468,31 @@ func GetAllRules() BackwardCompatibilityRules {
 		newBackwardCompatibilityRule(RequestParameterListOfTypesNarrowedId, ERR, RequestParameterListOfTypesChangedCheck, DirectionRequest, LocationParameters, ActionRemove),
 		newBackwardCompatibilityRule(RequestParameterPropertyListOfTypesWidenedId, INFO, RequestParameterListOfTypesChangedCheck, DirectionRequest, LocationParameters, ActionAdd),
 		newBackwardCompatibilityRule(RequestParameterPropertyListOfTypesNarrowedId, ERR, RequestParameterListOfTypesChangedCheck, DirectionRequest, LocationParameters, ActionRemove),
+		// RequestOneOfWrappingChangedCheck
+		newBackwardCompatibilityRule(RequestBodyOneOfWrappingPropertyBecameOptionalId, INFO, RequestOneOfWrappingChangedCheck, DirectionRequest, LocationBody, ActionChange),
+		newBackwardCompatibilityRule(RequestBodyOneOfWrappingPropertyBecameRequiredId, ERR, RequestOneOfWrappingChangedCheck, DirectionRequest, LocationBody, ActionChange),
+		newBackwardCompatibilityRule(RequestPropertyOneOfWrappingPropertyBecameOptionalId, INFO, RequestOneOfWrappingChangedCheck, DirectionRequest, LocationProperties, ActionChange),
+		newBackwardCompatibilityRule(RequestPropertyOneOfWrappingPropertyBecameRequiredId, ERR, RequestOneOfWrappingChangedCheck, DirectionRequest, LocationProperties, ActionChange),
+		// ResponseOneOfWrappingChangedCheck
+		newBackwardCompatibilityRule(ResponseBodyOneOfWrappingPropertyBecameOptionalId, ERR, ResponseOneOfWrappingChangedCheck, DirectionResponse, LocationBody, ActionChange),
+		newBackwardCompatibilityRule(ResponseBodyOneOfWrappingPropertyBecameRequiredId, INFO, ResponseOneOfWrappingChangedCheck, DirectionResponse, LocationBody, ActionChange),
+		newBackwardCompatibilityRule(ResponsePropertyOneOfWrappingPropertyBecameOptionalId, ERR, ResponseOneOfWrappingChangedCheck, DirectionResponse, LocationProperties, ActionChange),
+		newBackwardCompatibilityRule(ResponsePropertyOneOfWrappingPropertyBecameRequiredId, INFO, ResponseOneOfWrappingChangedCheck, DirectionResponse, LocationProperties, ActionChange),
+		// OneOfWrapping type mismatch rules
+		newBackwardCompatibilityRule(RequestBodyOneOfWrappingTypeMismatchId, ERR, RequestOneOfWrappingChangedCheck, DirectionRequest, LocationBody, ActionChange),
+		newBackwardCompatibilityRule(RequestPropertyOneOfWrappingTypeMismatchId, ERR, RequestOneOfWrappingChangedCheck, DirectionRequest, LocationProperties, ActionChange),
+		newBackwardCompatibilityRule(ResponseBodyOneOfWrappingTypeMismatchId, ERR, ResponseOneOfWrappingChangedCheck, DirectionResponse, LocationBody, ActionChange),
+		newBackwardCompatibilityRule(ResponsePropertyOneOfWrappingTypeMismatchId, ERR, ResponseOneOfWrappingChangedCheck, DirectionResponse, LocationProperties, ActionChange),
+		// OneOfWrapping property added rules
+		newBackwardCompatibilityRule(RequestBodyOneOfWrappingPropertyAddedId, INFO, RequestOneOfWrappingChangedCheck, DirectionRequest, LocationBody, ActionAdd),
+		newBackwardCompatibilityRule(RequestPropertyOneOfWrappingPropertyAddedId, INFO, RequestOneOfWrappingChangedCheck, DirectionRequest, LocationProperties, ActionAdd),
+		newBackwardCompatibilityRule(ResponseBodyOneOfWrappingPropertyAddedId, ERR, ResponseOneOfWrappingChangedCheck, DirectionResponse, LocationBody, ActionAdd),
+		newBackwardCompatibilityRule(ResponsePropertyOneOfWrappingPropertyAddedId, ERR, ResponseOneOfWrappingChangedCheck, DirectionResponse, LocationProperties, ActionAdd),
+		// OneOfWrapping property removed rules
+		newBackwardCompatibilityRule(RequestBodyOneOfWrappingPropertyRemovedId, INFO, RequestOneOfWrappingChangedCheck, DirectionRequest, LocationBody, ActionRemove),
+		newBackwardCompatibilityRule(RequestPropertyOneOfWrappingPropertyRemovedId, INFO, RequestOneOfWrappingChangedCheck, DirectionRequest, LocationProperties, ActionRemove),
+		newBackwardCompatibilityRule(ResponseBodyOneOfWrappingPropertyRemovedId, ERR, ResponseOneOfWrappingChangedCheck, DirectionResponse, LocationBody, ActionRemove),
+		newBackwardCompatibilityRule(ResponsePropertyOneOfWrappingPropertyRemovedId, ERR, ResponseOneOfWrappingChangedCheck, DirectionResponse, LocationProperties, ActionRemove),
 	}
 }
 
